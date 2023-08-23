@@ -29,15 +29,13 @@ for job in jobs:
     if cluster_id is not None and proc_id is not None and status is not None:
         # print(cluster_id, proc_id, status)
         status_str = status_string[status]
-        job_data.append(
-            {
-                "ClusterId": cluster_id,
-                "ProcId": proc_id,
-                "Status": status_str,
-                "Owner": owner,
-                "RemoteHost": remote_host,
-            }
-        )
+        job_data.append({
+            "ClusterId": cluster_id,
+            "ProcId": proc_id,
+            "Status": status_str,
+            "Owner": owner,
+            "RemoteHost": remote_host,
+        })
     else:
         print("Invalid job data:", job)
 

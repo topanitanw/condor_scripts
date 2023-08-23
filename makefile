@@ -12,5 +12,5 @@ requirements.txt:
 	pipreqs . --force
 
 format:
-	yapf --in-place *.py;
+	yapf --in-place scripts/bin/*.py;
 .PHONY: format
