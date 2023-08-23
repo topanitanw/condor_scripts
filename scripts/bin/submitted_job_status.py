@@ -18,15 +18,16 @@ job_data = []
 
 # Collect job status data
 for job in jobs:
-    print(job)
+    # print(job)
     cluster_id = job.get("ClusterId")
     proc_id = job.get("ProcId")
     status = job.get("JobStatus")
     owner = job.get("Owner")
-    remote_host = job.get("RemoteHost", "None").split(".")[0]
+    remote_host = job.get("RemoteHost", "None")
+    remote_host = remote_host.split(".")[0]
 
     if cluster_id is not None and proc_id is not None and status is not None:
-        print(cluster_id, proc_id, status)
+        # print(cluster_id, proc_id, status)
         status_str = status_string[status]
         job_data.append(
             {
@@ -42,6 +43,9 @@ for job in jobs:
 
 # Create a DataFrame
 df = pd.DataFrame(job_data)
+
+# Sort the DataFrame based on the "foo" column
+df = df.sort_values(by="Owner", ignore_index=True)
 
 # Print the DataFrame to stdout
 print(df)
