@@ -95,7 +95,7 @@ def main():
                     "Status": status_str,
                     "Owner": owner,
                     "RemoteHost": remote_host,
-                    "Args": "",# args,
+                    "Args": "",  # args,
                 }, )
         else:
             print("Invalid job data:", job)
@@ -118,6 +118,7 @@ def main():
     print(df)
 
     df.to_csv("status.csv", index=False)
+
 
 if __name__ == '__main__':
     main()
