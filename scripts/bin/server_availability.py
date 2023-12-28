@@ -5,10 +5,12 @@ import pandas as pd
 def get_condor_slots():
     try:
         # Run the condor_status command and capture its output
-        result = subprocess.run(['condor_status'],
-                                stdout=subprocess.PIPE,
-                                text=True,
-                                check=True)
+        result = subprocess.run(
+            ['condor_status'],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
 
         # Split the output into lines
         lines = result.stdout.split('\n')

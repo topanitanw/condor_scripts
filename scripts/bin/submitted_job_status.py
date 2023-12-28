@@ -11,7 +11,8 @@ for member in htcondor.JobStatus:
 
 def build_arg_parser():
     args = argparse.ArgumentParser(
-        description="generate the experiment script")
+        description="generate the experiment script"
+    )
 
     args.add_argument(
         "-m",
@@ -96,7 +97,8 @@ def main():
                     "Owner": owner,
                     "RemoteHost": remote_host,
                     "Args": "",  # args,
-                }, )
+                },
+            )
         else:
             print("Invalid job data:", job)
 
