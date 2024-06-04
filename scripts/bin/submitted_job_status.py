@@ -3,6 +3,7 @@ import argparse
 import logging as log
 import pandas as pd
 import os
+import re
 
 status_string = {}
 for member in htcondor.JobStatus:
@@ -39,7 +40,7 @@ def main():
     args_cl = arg_parser.parse_args()
 
     # warning 30, info 20, debug 10
-    log_level = log.ERROR
+    log_level = log.INFO
     if args_cl.debug:
         log_level = log.DEBUG
 
@@ -64,11 +65,14 @@ def main():
 
     username = os.getlogin()
     # Collect job status data
+    index = 0
     for job in jobs:
         owner = job.get("Owner", "")
         if args_cl.user_only and owner != username:
             continue
-        # print(job)
+        # if index < 4:
+        #     print(job)
+        #     index += 1
         # cluster_id = job.get("ClusterId")
         # proc_id = job.get("ProcId")
         # print(cluster_id, proc_id)
@@ -85,8 +89,19 @@ def main():
         cluster_id = job.get("ClusterId", "")
         proc_id = job.get("ProcId", "")
         args = job.get("Args", "")
+        is_whole_machine_job = job.get("IsWholeMachineJob", "")
 
-        if cluster_id is not None and proc_id is not None and status is not None:
+        requirement = job.get("Requirements", "")
+        log.error("requirement: %s", requirement)
+        log.error("type: %s", type(requirement))
+
+        pattern = r'\bMachine\b'
+        matches = re.findall(pattern, str(requirement))
+        nmachine_require = len(matches)
+
+        if cluster_id is not None \
+            and proc_id is not None \
+            and status is not None:
             # print(cluster_id, proc_id, status)
             status_str = status_string[status]
             job_data.append(
@@ -97,6 +112,8 @@ def main():
                     "Owner": owner,
                     "RemoteHost": remote_host,
                     "Args": "",  # args,
+                    "IsWholeMachineJob": is_whole_machine_job,
+                    "NTargetMachine": nmachine_require,
                 },
             )
         else:
@@ -109,7 +126,10 @@ def main():
         "Owner",
         "RemoteHost",
         "Args",
+        "IsWholeMachineJob",
+        "NTargetMachine",
     ]
+
     # Create a DataFrame
     df = pd.DataFrame(job_data, columns=column)
 

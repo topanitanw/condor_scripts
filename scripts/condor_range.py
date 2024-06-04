@@ -12,7 +12,7 @@ import logging as log
 
 def build_arg_parser():
     args = argparse.ArgumentParser(
-        description="generate the experiment script"
+       description="generate the experiment script"
     )
 
     args.add_argument(
@@ -79,8 +79,7 @@ def main():
         log_level = log.INFO
 
     log.basicConfig(
-        format=
-        "[%(levelname)s m:%(module)s f:%(funcName)s l:%(lineno)s]: %(message)s",
+        format="[%(levelname)s m:%(module)s f:%(funcName)s l:%(lineno)s]: %(message)s",
         level=log_level
     )
 
@@ -100,3 +99,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

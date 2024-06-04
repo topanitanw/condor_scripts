@@ -11,7 +11,7 @@ ifeq ($(ME_ONLY), yes)
 endif
 
 status:
-	$(PYTHON) scripts/bin/submitted_job_status.py $(STATUS_FLAG)
+	$(PYTHON) scripts/bin/submitted_job_status.py -d $(STATUS_FLAG)
 .PHONY: status
 
 requirements.txt:
