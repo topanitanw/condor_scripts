@@ -92,8 +92,8 @@ def main():
         is_whole_machine_job = job.get("IsWholeMachineJob", "")
 
         requirement = job.get("Requirements", "")
-        log.error("requirement: %s", requirement)
-        log.error("type: %s", type(requirement))
+        log.debug("requirement: %s", requirement)
+        log.debug("type: %s", type(requirement))
 
         pattern = r'\bMachine\b'
         matches = re.findall(pattern, str(requirement))
