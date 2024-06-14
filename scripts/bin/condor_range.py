@@ -30,7 +30,7 @@ def build_arg_parser():
         "-e",
         "--ending-jobid",
         action="store",
-        help="the ending jobid to remove from the condor",
+        help="the ending jobid to remove from the condor inclusive",
         type=int,
         default=0,
         dest="ending_jobid",
@@ -51,7 +51,8 @@ def build_arg_parser():
         "-c",
         "--condor-cmd",
         action="store",
-        help="the condor command",
+        help=
+        "the condor command by default the value of this variable is condor_rm",
         default="condor_rm",
         dest="condor_cmd",
         required=False

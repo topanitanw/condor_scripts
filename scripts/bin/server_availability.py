@@ -14,38 +14,47 @@ def get_condor_slots():
 
         # Split the output into lines
         lines = result.stdout.split('\n')
-
         # Parse the output to extract available slots per server
         slots = {}
         line_num = 0
+        counter = 0
         for line in lines:
             if line_num == 0:
                 line_num += 1
                 continue
 
-            if line.strip():
-                fields = line.split()
+            stripped_line = line.strip()
+            if not stripped_line:
+                continue
 
-                if len(fields) < 5:
-                    continue
-                # fields[0] is 'slot4@allagash.cs.northwestern.edu'
-                # server = allagash
-                # print(fields)
+            fields = line.split()
+            if len(fields) < 5:
+                continue
 
-                if "slot" in fields[0]:
-                    server = fields[0].split('@')[1].split('.')[0]
+            # ['slot1@allagash.cs.northwestern.edu', 'LINUX', 'X86_64', 'Unclaimed', 'Idle', '0.000', '6841', '0+11:53:46']
+            # ['slot1@allagash.cs.northwestern.edu', 'LINUX', 'X86_64', 'Unclaimed', 'Idle', '0.000', '6841', '0+11:53:46']
+            # ['slot2@allagash.cs.northwestern.edu', 'LINUX', 'X86_64', 'Claimed', 'Busy', '2.080', '6841', '0+03:13:04']
 
-                    server_info = slots.get(
-                        server,
-                        {
-                            'total': 0,
-                            'available': 0
-                        },
-                    )
-                    if fields[3] == 'Unclaimed':
-                        server_info['available'] += 1
-                    server_info['total'] += 1
-                    slots[server] = server_info
+            # fields[0] is 'slot4@allagash.cs.northwestern.edu'
+            # server = allagash
+            # print(fields)
+
+            if "slot" not in fields[0]:
+                continue
+
+            server = fields[0].split('@')[1].split('.')[0]
+
+            server_info = slots.get(
+                server,
+                {
+                    'total': 0,
+                    'available': 0
+                },
+            )
+            if fields[3] == 'Unclaimed':
+                server_info['available'] += 1
+            server_info['total'] += 1
+            slots[server] = server_info
 
         return slots
 
