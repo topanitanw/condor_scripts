@@ -86,5 +86,6 @@ if __name__ == "__main__":
 
     # sort the data frame by % available
     df = df.sort_values(by=['% available'], ascending=False)
+    df = df.reset_index(drop=True)
     print(df)
     print(f"Total Available Slots: {total_available_slots}")

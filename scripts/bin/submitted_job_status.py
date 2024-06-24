@@ -149,6 +149,9 @@ def process_data(df):
                 },
             )
 
+            if row["NTargetMachine"] > 1:
+                continue
+
             server_dict["nqueue"] += 1
 
         server_data[server_name] = server_dict
