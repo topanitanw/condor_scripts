@@ -156,6 +156,10 @@ def process_data(df):
 
         server_data[server_name] = server_dict
     df = pd.DataFrame.from_dict(server_data, orient='index')
+    df.reset_index(inplace=True)
+    df.rename(columns={'index': 'server'}, inplace=True)
+    df = df.sort_values(by=["server"])
+    df = df.reset_index(drop=True)
     return df
 
 
