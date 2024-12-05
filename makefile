@@ -25,6 +25,9 @@ ifeq ($(ME_ONLY), yes)
 	STATUS_FLAG+= -m
 endif
 
+all: status avail
+.PHONY: all
+
 status:
 	$(PYTHON) scripts/bin/submitted_job_status.py $(STATUS_FLAG)
 .PHONY: status

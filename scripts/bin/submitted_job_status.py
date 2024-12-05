@@ -1,3 +1,4 @@
+import sys
 import htcondor
 import argparse
 import logging as log
@@ -208,6 +209,11 @@ def main():
 
     raw_df = parse_condor_status(args_cl)
     processed_df = process_data(raw_df)
+
+    if processed_df.empty:
+        print("No job is running.")
+        sys.exit(0)
+
     print(processed_df)
 
 
